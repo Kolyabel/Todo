@@ -33,7 +33,7 @@ class InputData extends React.PureComponent {
     render() {
         //const { value } = this.state 
 
-        const listItems = state.list.map((item) => 
+        const listItems = this.state.list.map((item) => 
                  <li key={new Date().getTime()}>{item}</li>
                 );
 
