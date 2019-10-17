@@ -22,7 +22,7 @@ class InputData extends React.PureComponent {
             console.log("valueInput:",event.target.value)
                     
             const newState = {
-                list:[].push(...this.state.list, this.state.value)
+                list:[].push(...this.state.list, this.state.value),
                 value: ""
             }
 
