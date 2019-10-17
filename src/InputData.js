@@ -43,7 +43,7 @@ class InputData extends React.PureComponent {
             <div>        
                  <input 
                     value={this.state.value}
-                    onChange={this.hendleChange}   
+                    onChange={this.handleChange}   
                     onKeyDown={this.listTodo}                    
                  /> 
 
