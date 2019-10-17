@@ -32,12 +32,6 @@ class InputData extends React.PureComponent {
     render() {
         const { value } = this.state 
 
-        const listItems = this.state.list.map((item) => 
-                 (<li key={new Date().getTime()}>{item.value}</li>)
-                )
-
-            console.log("listItems:",listItems)
-
         return (
             <div>        
                  <input 
@@ -46,8 +40,11 @@ class InputData extends React.PureComponent {
                     onKeyDown={this.listTodo}                    
                  /> 
 
-                 <ul>
-                     {listItems}
+                 <ul> {
+                        this.state.list.map((item) => (
+                        <li key={new Date().getTime()}>{item.value}</li>
+                       ))
+                       }
                  </ul>
             </div>
             
