@@ -3,7 +3,7 @@ import React from 'react';
 class InputData extends React.PureComponent {
     state = {
         value: "",
-        list: "",    
+        list: [],    
     }
 
     handleChange = (event) => {
@@ -19,10 +19,10 @@ class InputData extends React.PureComponent {
     listTodo = (event) => {
         if (event.key === "Enter") { 
 
-            console.log("valueInput:",event.target.value, this.state.value)
+            console.log("valueInput:",event.target.value)
                     
             this.setState({
-                list: event.target, 
+                list [] = this.state.value, 
                 value: ""
             })
 
@@ -33,11 +33,11 @@ class InputData extends React.PureComponent {
     render() {
         const { value } = this.state 
 
-        // const listItems = this.state.list.map((item) => 
-        //          <li key={new Date().getTime()}>{item.value}</li>
-        //         );
+        const listItems = this.state.list.map((item) => 
+                 <li key={new Date().getTime()}>{item.value}</li>
+                );
 
-        //     console.log("listItems:",listItems)
+            console.log("listItems:",listItems)
 
         return (
             <div>        
@@ -47,9 +47,9 @@ class InputData extends React.PureComponent {
                     onKeyDown={this.listTodo}                    
                  /> 
 
-                 {/* <ul>
+                 <ul>
                      {listItems}
-                 </ul> */}
+                 </ul>
             </div>
             
         );
