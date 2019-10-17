@@ -6,8 +6,8 @@ class InputData extends React.PureComponent {
         list: "",    
     }
 
-    hendleChange = (e) => {
-        const { value = "" } = e.target
+    handleChange = (event) => {
+        const { value = "" } = event.target
 
         const state = {
             value
@@ -16,8 +16,8 @@ class InputData extends React.PureComponent {
         this.setState(state)
     }
 
-    listTodo = (k) => {
-        if (k.key === "Enter") { 
+    listTodo = (event) => {
+        if (event.key === "Enter") { 
 
             console.log("valueInput:",k.target.value)
                     
@@ -26,19 +26,18 @@ class InputData extends React.PureComponent {
                 value: ""
             })
 
-            console.log("list:",this.state.list.value)
-
-            const listItems = this.state.map((item) => 
-                 <li key={new Date().getTime()}>{item.list}</li>
-                );
-
-            console.log("list:",this.listItems)
-        }   
-         
+            console.log("list:",this.state.list.value)            
+        }          
     }
 
     render() {
         //const { value } = this.state 
+
+        const listItems = state.list.map((item) => 
+                 <li key={new Date().getTime()}>{item}</li>
+                );
+
+            console.log("listItems:",listItems)
 
         return (
             <div>        
@@ -49,7 +48,7 @@ class InputData extends React.PureComponent {
                  /> 
 
                  <ul>
-                     {this.listItems}
+                     {listItems}
                  </ul>
             </div>
             
