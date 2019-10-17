@@ -1,11 +1,9 @@
 import React from 'react';
 
-const mapTodo = []
-
 class InputData extends React.PureComponent {
     state = {
         value: "",
-        elMap: "",    
+        list: "",    
     }
 
     hendleChange = (e) => {
@@ -23,12 +21,18 @@ class InputData extends React.PureComponent {
 
             console.log("valueInput:",k.target.value)
                     
-            this.setState({elMap: k.target})
-            this.setState({value: ""})
+            this.setState({
+                list: k.target, 
+                value: ""
+            })
 
-            mapTodo.push(<li key={new Date().getTime()}>{this.state.elMap.value}</li>)
+            console.log("list:",this.state.list.value)
 
-            console.log("map:",mapTodo)
+            const listItems = this.state.map((item) => 
+                 <li key={new Date().getTime()}>{item.list}</li>
+                );
+
+            console.log("list:",this.listItems)
         }   
          
     }
@@ -45,7 +49,7 @@ class InputData extends React.PureComponent {
                  /> 
 
                  <ul>
-                     {mapTodo}
+                     {this.listItems}
                  </ul>
             </div>
             
