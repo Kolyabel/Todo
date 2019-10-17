@@ -19,25 +19,25 @@ class InputData extends React.PureComponent {
     listTodo = (event) => {
         if (event.key === "Enter") { 
 
-            console.log("valueInput:",event.target.value)
+            console.log("valueInput:",event.target.value, this.state.value)
                     
             this.setState({
                 list: event.target, 
                 value: ""
             })
 
-            console.log("list:",this.state.list.value)            
+            console.log("list:",this.state.list)            
         }          
     }
 
     render() {
-        //const { value } = this.state 
+        const { value } = this.state 
 
-        const listItems = this.state.list.map((item) => 
-                 <li key={new Date().getTime()}>{item}</li>
-                );
+        // const listItems = this.state.list.map((item) => 
+        //          <li key={new Date().getTime()}>{item.value}</li>
+        //         );
 
-            console.log("listItems:",listItems)
+        //     console.log("listItems:",listItems)
 
         return (
             <div>        
@@ -47,9 +47,9 @@ class InputData extends React.PureComponent {
                     onKeyDown={this.listTodo}                    
                  /> 
 
-                 <ul>
+                 {/* <ul>
                      {listItems}
-                 </ul>
+                 </ul> */}
             </div>
             
         );
