@@ -19,10 +19,10 @@ class InputData extends React.PureComponent {
     listTodo = (event) => {
         if (event.key === "Enter") { 
 
-            console.log("valueInput:",k.target.value)
+            console.log("valueInput:",event.target.value)
                     
             this.setState({
-                list: k.target, 
+                list: event.target, 
                 value: ""
             })
 
