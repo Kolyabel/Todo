@@ -3,51 +3,35 @@ import React from 'react';
 class InputData extends React.PureComponent {
     state = {
         value: "",
-        list: [],    
     }
 
     handleChange = (event) => {
-        const { value = "" } = event.target
 
-        const state = {
-            value
-        }
+        const value = event.target.value
 
-        this.setState(state)
+        this.setState({value})
     }
 
-    listTodo = (event) => {
-        if (event.key === "Enter") {
+    onKey = (event) => {
+        console.log("onKey.start", "key:",event.key)
+        if(event.keyCode == 13) {
+            console.log("onKey.start", "ok")
+            this.props.listAdd(this.state.value)
 
-
-            const newState = {
-                list:[
-                    ...this.state.list,
-                    this.state.value
-                ],
-                value: ""
-            }
-
-            this.setState(newState)
-        }          
+            this.setState({value: ""})
+        }
     }
 
     render() {
-        const { list, value } = this.state
+        const { value } = this.state
 
         return (
             <div>        
                  <input 
                     value={value}
-                    onChange={this.handleChange}   
-                    onKeyDown={this.listTodo}                    
-                 /> 
-
-                 <ul>
-                     { list.map( (item, index) => (
-                        <li key={index}>{item}</li>
-                     ))}
-                 </ul>
+                    onChange={this.handleChange}
+                    onKeyDown={this.onKey}
+                 />
             </div>
             
         );
