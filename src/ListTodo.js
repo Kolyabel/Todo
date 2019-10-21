@@ -6,11 +6,13 @@ class ListTodo extends React.PureComponent {
         super(props)
 
         const {
-            list = []
+            list = [],
+            listAll = [],
         } = props
 
         this.state = {
-            list
+            list,
+            listAll,
         }
     }
 
@@ -20,31 +22,32 @@ class ListTodo extends React.PureComponent {
         }
     }
 
-    // state = {
-    //     check: false,
-    //     listState: this.props
-    // }
-
     handleChange = (event) => {
         const listMap = this.state.list.map(function (item,index) {
+
             if (index == event.target.name) {
                 item.active = !item.active;
             }
+
             return item;
         })
-        console.log("listMap", listMap)
-        this.setState(listMap)
 
+        this.setState({list: listMap, listAll: listMap})
     }
 
     buttonActive = () =>{
-        this.setState(state => {
-            const list = state.list.filter((item) => item.active == true)
-            return {list};
+        this.setState({list: this.state.listAll})
+
+        const list = this.state.list.filter(function(item) {
+            return item.active == true;
         })
+
+        this.setState({list})
     }
 
     buttonCompleted = () =>{
+        this.setState({list: this.state.listAll})
+
         this.setState(state => {
             const list = state.list.filter((item) => item.active == false)
             return {list};
@@ -52,7 +55,7 @@ class ListTodo extends React.PureComponent {
     }
 
     buttonAll = () =>{
-        this.setState(this.props)
+        this.setState({list: this.state.listAll})
     }
 
     render() {
@@ -64,6 +67,7 @@ class ListTodo extends React.PureComponent {
                         <li key={item.id}>
                             <input name={index}
                                    type="checkbox"
+                                   checked={item.active}
                                    onChange={this.handleChange}/>
                             {item.value}
                         </li>
