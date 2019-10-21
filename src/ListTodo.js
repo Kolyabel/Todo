@@ -38,8 +38,9 @@ class ListTodo extends React.PureComponent {
     buttonActive = () =>{
         this.setState({list: this.state.listAll})
 
-        const list = this.state.list.filter(function(item) {
-            return item.active == true;
+        this.setState(state => {
+            const list = state.list.filter((item) => item.active == true)
+            return {list};
         })
 
         this.setState({list})
