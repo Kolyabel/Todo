@@ -12,7 +12,7 @@ class App extends React.Component {
     listAdd = (value) => {
         const item = {
             value,
-            active: "false",
+            active: false,
             id: this.counter
         }
 

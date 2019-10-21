@@ -12,8 +12,12 @@ class ListTodo extends React.PureComponent {
         this.state = {
             list
         }
+    }
 
-        console.log("listState",this.state.list)
+    componentDidUpdate(prevProps) {
+        if (this.props.list !== prevProps.list) {
+            this.setState(this.props)
+        }
     }
 
     // state = {
@@ -22,28 +26,44 @@ class ListTodo extends React.PureComponent {
     // }
 
     handleChange = (event) => {
-        console.log("checkbox",event.target.checked,event.target)
+        const listMap = this.state.list.map(function (item,index) {
+            if (index == event.target.name) {
+                item.active = !item.active;
+            }
+            return item;
+        })
+        console.log("listMap", listMap)
+        this.setState(listMap)
+
     }
 
     buttonActive = () =>{
+        this.setState(state => {
+            const list = state.list.filter((item) => item.active == true)
+            return {list};
+        })
     }
 
     buttonCompleted = () =>{
+        this.setState(state => {
+            const list = state.list.filter((item) => item.active == false)
+            return {list};
+        })
     }
 
     buttonAll = () =>{
+        this.setState(this.props)
     }
 
     render() {
-        const { list = []} = this.props
-        console.log("this.props",this.props, this.props.list)
-        console.log("listState",this.state.list)
+        const { list = []} = this.state
         return (
             <div>
                 <ul>
-                    { list.map( (item) => (
+                    { list.map( (item,index) => (
                         <li key={item.id}>
-                            <input type="checkbox"
+                            <input name={index}
+                                   type="checkbox"
                                    onChange={this.handleChange}/>
                             {item.value}
                         </li>
