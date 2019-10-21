@@ -2,12 +2,16 @@ import React from 'react';
 import App from "./App";
 
 class ListTodo extends React.PureComponent {
-
     constructor(props) {
         super(props)
 
-        const { list = []} = props
-        this.state = {list}
+        const {
+            list = []
+        } = props
+
+        this.state = {
+            list
+        }
 
         console.log("listState",this.state.list)
     }
