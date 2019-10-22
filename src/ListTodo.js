@@ -20,18 +20,8 @@ class ListTodo extends React.PureComponent {
         }
     }
 
-    handleChange = (event) => {
-        const { list = [] } = this.state
-        const listMap = list.map(function (item) {
-
-            if (item.id == event) {
-                item.active = !item.active
-            }
-
-            return item;
-        })
-
-        this.setState({ list: listMap})
+    handleChange = (id) => {
+        this.props.checkList(id)
     }
 
     buttonActive = () =>{
@@ -42,7 +32,7 @@ class ListTodo extends React.PureComponent {
     }
 
     buttonCompleted = () => {
-        const {list = []} = this.props
+        const { list = []} = this.props
         const listMap = list.filter((item) => item.active == false)
 
         this.setState({list: listMap})
@@ -54,6 +44,7 @@ class ListTodo extends React.PureComponent {
 
     render() {
         const { list = []} = this.state
+
         return (
             <div>
                 <ul>

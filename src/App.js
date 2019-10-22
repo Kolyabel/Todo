@@ -23,6 +23,20 @@ class App extends React.Component {
         })
     }
 
+    checkList = (id) => {
+        const {list = []} = this.state
+        const new_list = list.slice()
+
+        new_list.forEach((item) => {
+
+            if (item.id == id) {
+                item.active = !item.active
+            }
+        })
+
+        this.setState({list:new_list})
+    }
+
     render() {
         const { list = [] } = this.state
 
@@ -30,7 +44,7 @@ class App extends React.Component {
             <div>
                 Введите данные нажмите Enter
                 <InputData listAdd={this.listAdd}/>
-                <ListTodo list={list} />
+                <ListTodo list={list} checkList={this.checkList} />
             </div>
         );
     }
