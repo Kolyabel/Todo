@@ -25,7 +25,7 @@ class ListTodo extends React.PureComponent {
     }
 
     buttonActive = () =>{
-        const { list = []} = this.state
+        const { list = []} = this.props
         const listMap = list.filter((item) => item.active == true)
 
         this.setState({list:listMap})
