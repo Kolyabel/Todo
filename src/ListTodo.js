@@ -7,56 +7,47 @@ class ListTodo extends React.PureComponent {
 
         const {
             list = [],
-            listAll = [],
         } = props
 
         this.state = {
             list,
-            listAll,
         }
     }
 
     componentDidUpdate(prevProps) {
         if (this.props.list !== prevProps.list) {
-            this.setState(this.props)
+            this.setState({list: this.props.list})
         }
     }
 
     handleChange = (event) => {
-        const listMap = this.state.list.map(function (item,index) {
+        const { list = [] } = this.state
+        const listMap = list.map(function (item) {
 
-            if (index == event.target.name) {
-                item.active = !item.active;
+            if (item.id == event) {
+                item.active = !item.active
             }
 
             return item;
         })
 
-        this.setState({list: listMap, listAll: listMap})
+        this.setState({ list: listMap})
     }
 
     buttonActive = () =>{
-        this.setState({list: this.state.listAll})
-
-        this.setState(state => {
-            const list = state.list.filter((item) => item.active == true)
-            return {list};
-        })
-
-        this.setState({list})
+        const { list = []} = this.props
+        const listMap = list.filter((item) => item.active == true)
+        this.setState({list:listMap})
     }
 
-    buttonCompleted = () =>{
-        this.setState({list: this.state.listAll})
-
-        this.setState(state => {
-            const list = state.list.filter((item) => item.active == false)
-            return {list};
-        })
+    buttonCompleted = () => {
+        const {list = []} = this.props
+        const listMap = list.filter((item) => item.active == false)
+        this.setState({list: listMap})
     }
 
     buttonAll = () =>{
-        this.setState({list: this.state.listAll})
+        this.setState({list: this.props.list})
     }
 
     render() {
@@ -64,18 +55,18 @@ class ListTodo extends React.PureComponent {
         return (
             <div>
                 <ul>
-                    { list.map( (item,index) => (
+                    { list.map( (item) => (
                         <li key={item.id}>
-                            <input name={index}
+                            <input name={item.id}
                                    type="checkbox"
                                    checked={item.active}
-                                   onChange={this.handleChange}/>
+                                   onChange={() => this.handleChange(item.id)}/>
                             {item.value}
                         </li>
                     ))}
                 </ul>
                 <button onClick={this.buttonActive}> Отмеченные </button>
-                <button onClick={this.buttonCompleted}> Завершенные </button>
+                <button onClick={this.buttonCompleted}> Пустые </button>
                 <button onClick={this.buttonAll}> Все </button>
             </div>
 
