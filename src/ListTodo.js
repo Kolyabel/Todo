@@ -35,7 +35,7 @@ class ListTodo extends React.PureComponent {
                     </ul>
                 </div>
             )
-        } else if (this.state.sortList == "completed"){
+        } else if ( this.state.sortList == "completed"){
 
             return (
                 <div>
