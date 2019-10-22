@@ -1,23 +1,10 @@
 import React from 'react';
-import App from "./App";
+import ListVisual from "./ListVisual";
 
 class ListTodo extends React.PureComponent {
-    constructor(props) {
-        super(props)
 
-        const {
-            list = [],
-        } = props
-
-        this.state = {
-            list,
-        }
-    }
-
-    componentDidUpdate(prevProps) {
-        if (this.props.list !== prevProps.list) {
-            this.setState({list: this.props.list})
-        }
+    state = {
+        sortList: "all"
     }
 
     handleChange = (id) => {
@@ -25,44 +12,54 @@ class ListTodo extends React.PureComponent {
     }
 
     buttonActive = () =>{
-        const { list = []} = this.props
-        const listMap = list.filter((item) => item.active == true)
-
-        this.setState({list:listMap})
+        this.setState({sortList: "active"})
     }
 
     buttonCompleted = () => {
-        const { list = []} = this.props
-        const listMap = list.filter((item) => item.active == false)
-
-        this.setState({list: listMap})
+        this.setState({sortList: "completed"})
     }
 
     buttonAll = () =>{
-        this.setState({list: this.props.list})
+        this.setState({sortList: "all"})
     }
 
     render() {
         const { list = []} = this.state
 
+        if (this.state.sortList == "active") {
+
+            return (
+                <div>
+                    <ul>
+                        < ListVisual list={list} active = {true} handleChange={this.handleChange}/>
+                    </ul>
+                </div>
+            )
+        } else if (this.state.sortList == "completed"){
+
+            return (
+                <div>
+                    <ul>
+                            < ListVisual list={list} active={false} handleChange={this.handleChange}/>
+                    </ul>
+                </div>
+            )
+        } else if (this.state.sortList == "all"){
+            return (
+                    <div>
+                        <ul>
+                            < ListVisual list={list} activ={true&&false}  handleChange={this.handleChange}/>
+                        </ul>
+                    </div>
+                )
+        }
+
         return (
             <div>
-                <ul>
-                    { list.map( (item) => (
-                        <li key={item.id}>
-                            <input name={item.id}
-                                   type="checkbox"
-                                   checked={item.active}
-                                   onChange={() => this.handleChange(item.id)}/>
-                            {item.value}
-                        </li>
-                    ))}
-                </ul>
                 <button onClick={this.buttonActive}> Отмеченные </button>
                 <button onClick={this.buttonCompleted}> Пустые </button>
                 <button onClick={this.buttonAll}> Все </button>
             </div>
-
         )
     }
 }

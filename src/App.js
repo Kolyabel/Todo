@@ -28,7 +28,7 @@ class App extends React.Component {
 
         const new_list = list.map((item) => {
 
-        const objAdd = item
+        const objAdd = {...item}
             if (item.id == id) {
                 objAdd.active = !objAdd.active
                 }
