@@ -25,15 +25,16 @@ class App extends React.Component {
 
     checkList = (id) => {
         const {list = []} = this.state
-        const new_list = list.slice()
 
-        new_list.forEach((item) => {
-
+        const new_list = list.map((item) => {
+        const objAdd = item
             if (item.id == id) {
-                item.active = !item.active
-            }
+                objAdd.active = !objAdd.active
+                }
+                return objAdd
         })
 
+        console.log("newList", new_list)
         this.setState({list:new_list})
     }
 
