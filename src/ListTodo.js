@@ -1,5 +1,4 @@
 import React from 'react';
-import ListVisual from "./ListVisual";
 
 class ListTodo extends React.PureComponent {
 
@@ -24,38 +23,34 @@ class ListTodo extends React.PureComponent {
     }
 
     render() {
-        const { list = []} = this.state
+        const { list = []} = this.props
+        const activeSort = "all"
+        let listFilter = this.props.list
 
-        if (this.state.sortList == "active") {
+        if (this.state.sortList == "active"){
 
-            return (
-                <div>
-                    <ul>
-                        < ListVisual list={list} active = {true} handleChange={this.handleChange}/>
-                    </ul>
-                </div>
-            )
-        } else if ( this.state.sortList == "completed"){
+            listFilter = list.filter((item) => item.active == true)
+        } else if (this.state.sortList == "completed"){
 
-            return (
-                <div>
-                    <ul>
-                            < ListVisual list={list} active={false} handleChange={this.handleChange}/>
-                    </ul>
-                </div>
-            )
+            listFilter = list.filter((item) => item.active == false)
         } else if (this.state.sortList == "all"){
-            return (
-                    <div>
-                        <ul>
-                            < ListVisual list={list} activ={true&&false}  handleChange={this.handleChange}/>
-                        </ul>
-                    </div>
-                )
+
+            listFilter = this.props.list
         }
 
-        return (
+        return(
             <div>
+                <ul>
+                    { listFilter.map( (item,index) => (
+                            <li key={item.id}>
+                                <input name={index}
+                                       type="checkbox"
+                                       defaultChecked={item.active}
+                                       onChange={() => this.handleChange(item.id)}/>
+                                {item.value}
+                            </li>
+                        ))}
+                </ul>
                 <button onClick={this.buttonActive}> Отмеченные </button>
                 <button onClick={this.buttonCompleted}> Пустые </button>
                 <button onClick={this.buttonAll}> Все </button>
