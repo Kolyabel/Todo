@@ -24,7 +24,6 @@ class ListTodo extends React.PureComponent {
 
     render() {
         const { list = []} = this.props
-        const activeSort = "all"
         let listFilter = this.props.list
 
         if (this.state.sortList == "active"){
