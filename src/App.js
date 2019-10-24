@@ -23,6 +23,25 @@ class App extends React.Component {
         })
     }
 
+    listElemAdd = (value,id) => {
+        console.log("listAddTodo",value, "id",id)
+
+        const {list = []} = this.state
+
+        const new_list = list.map((item) => {
+
+            const objAdd = {...item}
+            if (item.id == id) {
+                objAdd.value = value
+                console.log("VALUE ===!!!",value)
+            }
+            return objAdd
+        })
+
+        console.log("newListAdd", new_list)
+        this.setState({list:new_list})
+    }
+
     checkList = (id) => {
         const {list = []} = this.state
 
@@ -46,7 +65,7 @@ class App extends React.Component {
             <div>
                 Введите данные нажмите Enter
                 <InputData listAdd={this.listAdd}/>
-                <ListTodo list={list} checkList={this.checkList} />
+                <ListTodo list={list} checkList={this.checkList} listElemAdd={this.listElemAdd}/>
             </div>
         );
     }
