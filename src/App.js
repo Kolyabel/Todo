@@ -23,22 +23,20 @@ class App extends React.Component {
         })
     }
 
-    listElemAdd = (value,id) => {
-        console.log("listAddTodo",value, "id",id)
+    itemAdd = (value,id) => {
 
         const {list = []} = this.state
 
         const new_list = list.map((item) => {
 
             const objAdd = {...item}
+
             if (item.id == id) {
                 objAdd.value = value
-                console.log("VALUE ===!!!",value)
             }
             return objAdd
         })
 
-        console.log("newListAdd", new_list)
         this.setState({list:new_list})
     }
 
@@ -48,6 +46,7 @@ class App extends React.Component {
         const new_list = list.map((item) => {
 
         const objAdd = {...item}
+
             if (item.id == id) {
                 objAdd.active = !objAdd.active
                 }
@@ -65,7 +64,7 @@ class App extends React.Component {
             <div>
                 Введите данные нажмите Enter
                 <InputData listAdd={this.listAdd}/>
-                <ListTodo list={list} checkList={this.checkList} listElemAdd={this.listElemAdd}/>
+                <ListTodo list={list} checkList={this.checkList} itemAdd={this.itemAdd}/>
             </div>
         );
     }

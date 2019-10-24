@@ -1,4 +1,5 @@
 import React from 'react';
+import Item from "./Item";
 
 class ListTodo extends React.PureComponent {
 
@@ -22,8 +23,8 @@ class ListTodo extends React.PureComponent {
         this.setState({sortList: "all"})
     }
 
-    listElemAdd = (value,id) => {
-        this.props.listElemAdd(value,id)
+    itemAdd = (value,id) => {
+        this.props.itemAdd(value,id)
     }
 
     render() {
@@ -46,84 +47,26 @@ class ListTodo extends React.PureComponent {
                 <ul>
                     { listFilter.map( (item,index) => (
                         <li key={item.id}>
+
                             <input name={index}
                                    type="checkbox"
                                    defaultChecked={item.active}
                                    onChange={() => this.handleChange(item.id)}/>
-                                        <ListValue value={item.value}
-                                                   id={item.id}
-                                                   listElemAdd={this.listElemAdd}/>
+
+                            <Item value={item.value}
+                                       id={item.id}
+                                       itemAdd={this.itemAdd}/>
                         </li>
                     ))}
                 </ul>
+
                 <button onClick={this.buttonActive}> Отмеченные </button>
                 <button onClick={this.buttonCompleted}> Пустые </button>
                 <button onClick={this.buttonAll}> Все </button>
+
             </div>
         )
     }
 }
 
-
-class ListValue extends React.PureComponent{
-
-    state = {
-        value: this.props.value,
-        listView: false
-    }
-
-    handleChange = (event) => {
-        const value = event.target.value
-        this.setState({value})
-    }
-
-    onKey = (event) => {
-
-        let tempTarget = event.target
-        let target
-
-        document.addEventListener("click", (event) => {
-
-            target = event.target
-            if (target == tempTarget) {
-                console.log("POPAL")
-            } else if(target !== tempTarget) {
-                console.log("NE POPAL")
-            }
-        })
-
-        if(event.keyCode == 13) {
-
-            this.props.listElemAdd(this.state.value,this.props.id)
-            this.setState({listView: false})
-        }
-        if(event.keyCode == 27) {
-            this.setState({listView: false})
-        }
-    }
-
-    DoubleClick = () => {
-        this.setState({listView:true})
-    }
-
-    render() {
-        const { value } = this.state
-        if (this.state.listView == false){
-            return (
-                <span onDoubleClick={this.DoubleClick}>
-                     {this.props.value}
-                </span>
-
-            )
-        } else {
-            return (
-               <input value={value}
-                      onClick={this.onKey}
-                      onChange={this.handleChange}
-                      onKeyDown={this.onKey}/>
-            )
-        }
-
-    }
-}
 export default ListTodo;

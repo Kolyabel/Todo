@@ -6,16 +6,14 @@ class InputData extends React.PureComponent {
     }
 
     handleChange = (event) => {
-
         const value = event.target.value
 
         this.setState({value})
     }
 
     onKey = (event) => {
-        console.log("onKey.start", "key:",event.key)
         if(event.keyCode == 13) {
-            console.log("onKey.start", "ok")
+
             this.props.listAdd(this.state.value)
 
             this.setState({value: ""})
