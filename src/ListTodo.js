@@ -107,7 +107,6 @@ class ListValue extends React.PureComponent{
     }
 
     render() {
-
         const { value } = this.state
         if (this.state.listView == false){
             return (
