@@ -4,7 +4,7 @@ class Item extends React.PureComponent{
 
     state = {
         value: this.props.value,
-        listView: false
+        listView: false,
     }
 
     handleChange = (event) => {
@@ -13,25 +13,8 @@ class Item extends React.PureComponent{
     }
 
     onKey = (event) => {
-
-        let tempTarget = event.target
-        let target
-
-        document.addEventListener("click", (event) => {
-
-            target = event.target
-
-            if (target == tempTarget) {
-                console.log("POPAL")
-            } else if(target != tempTarget) {
-                console.log("NE POPAL")
-            }
-        })
-
-
         if(event.keyCode == 13) {
-
-            this.props.itemAdd(this.state.value,this.props.id)
+            this.props.changeItem(this.state.value,this.props.id)
             this.setState({listView: false})
         }
 
@@ -44,27 +27,44 @@ class Item extends React.PureComponent{
         this.setState({listView:true})
     }
 
+    toggleCheck = (id) => {
+        this.props.toggleCheck(this.props.id)
+    }
+
     render() {
         const { value } = this.state
 
         if (this.state.listView == false){
-
             return (
-                <span onDoubleClick={this.DoubleClick}>
-                     {this.props.value}
-                </span>
+                <li key={this.props.key}>
+                    <input
+                        type="checkbox"
+                        defaultChecked={this.props.defaultChecked}
+                        onChange={this.toggleCheck}
+                    />
 
+                    <span onDoubleClick={this.DoubleClick}>
+                        {this.props.value}
+                    </span>
+                </li>
             )
         } else {
-
             return (
-                <input value={value}
-                       onClick={event.preventDefault}
-                       onChange={this.handleChange}
-                       onKeyDown={this.onKey}/>
+                <li key={this.props.key}>
+                    <input
+                        type="checkbox"
+                        defaultChecked={this.props.defaultChecked}
+                        onChange={this.toggleCheck}
+                    />
+
+                    <input
+                        value={value}
+                        onChange={this.handleChange}
+                        onKeyDown={this.onKey}
+                    />
+                </li>
             )
         }
-
     }
 }
 

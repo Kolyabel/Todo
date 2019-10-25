@@ -7,7 +7,7 @@ class ListTodo extends React.PureComponent {
         sortList: "all",
     }
 
-    handleChange = (id) => {
+    toggleCheck = (id) => {
         this.props.checkList(id)
     }
 
@@ -23,8 +23,8 @@ class ListTodo extends React.PureComponent {
         this.setState({sortList: "all"})
     }
 
-    itemAdd = (value,id) => {
-        this.props.itemAdd(value,id)
+    changeItem = (value,id) => {
+        this.props.changeItem(value,id)
     }
 
     render() {
@@ -46,17 +46,14 @@ class ListTodo extends React.PureComponent {
             <div>
                 <ul>
                     { listFilter.map( (item,index) => (
-                        <li key={item.id}>
-
-                            <input name={index}
-                                   type="checkbox"
-                                   defaultChecked={item.active}
-                                   onChange={() => this.handleChange(item.id)}/>
-
-                            <Item value={item.value}
-                                       id={item.id}
-                                       itemAdd={this.itemAdd}/>
-                        </li>
+                        <Item
+                            key={item.id}
+                            defaultChecked={item.active}
+                            toggleCheck={this.toggleCheck}
+                            value={item.value}
+                            id={item.id}
+                            changeItem={this.changeItem}
+                        />
                     ))}
                 </ul>
 

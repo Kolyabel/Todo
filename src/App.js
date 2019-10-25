@@ -23,7 +23,7 @@ class App extends React.Component {
         })
     }
 
-    itemAdd = (value,id) => {
+    changeItem = (value,id) => {
 
         const {list = []} = this.state
 
@@ -53,7 +53,6 @@ class App extends React.Component {
                 return objAdd
         })
 
-        console.log("newList", new_list)
         this.setState({list:new_list})
     }
 
@@ -64,7 +63,7 @@ class App extends React.Component {
             <div>
                 Введите данные нажмите Enter
                 <InputData listAdd={this.listAdd}/>
-                <ListTodo list={list} checkList={this.checkList} itemAdd={this.itemAdd}/>
+                <ListTodo list={list} checkList={this.checkList} changeItem={this.changeItem}/>
             </div>
         );
     }
