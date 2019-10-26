@@ -75,7 +75,7 @@ class App extends React.Component {
         const { list = [] } = this.state
 
         if (list.length != 0){
-            localStorage.setItem("list",JSON.stringify(this.state.list))
+            localStorage.setItem("list",JSON.stringify(list))
         }
 
         return (
