@@ -4,7 +4,7 @@ class Item extends React.PureComponent{
 
     state = {
         value: this.props.value,
-        listView: false,
+        inputView: false,
     }
 
     handleChange = (event) => {
@@ -15,26 +15,30 @@ class Item extends React.PureComponent{
     onKey = (event) => {
         if(event.keyCode == 13) {
             this.props.changeItem(this.state.value,this.props.id)
-            this.setState({listView: false})
+            this.setState({inputView: false})
         }
 
         if(event.keyCode == 27) {
-            this.setState({listView: false})
+            this.setState({inputView: false})
         }
     }
 
     DoubleClick = () => {
-        this.setState({listView:true})
+        this.setState({inputView:true})
     }
 
     toggleCheck = (id) => {
         this.props.toggleCheck(this.props.id)
     }
 
+    deleteItem = (id) => {
+        this.props.deleteItem(this.props.id)
+    }
+
     render() {
         const { value } = this.state
 
-        if (this.state.listView == false){
+        if (this.state.inputView == false){
             return (
                 <li key={this.props.key}>
                     <input
@@ -46,6 +50,12 @@ class Item extends React.PureComponent{
                     <span onDoubleClick={this.DoubleClick}>
                         {this.props.value}
                     </span>
+
+                    <input
+                        type="button"
+                        value="Delete"
+                        onClick={this.deleteItem}
+                    />
                 </li>
             )
         } else {

@@ -3,28 +3,25 @@ import InputData from './InputData';
 import ListTodo from './ListTodo';
 
 class App extends React.Component {
+
     state = {
         list: []
     }
-
-    counter = 0
 
     listAdd = (value) => {
         const item = {
             value,
             active: false,
-            id: this.counter
+            id: new Date().getTime()
         }
-
-        this.counter += 1
 
         this.setState({
             list:[...this.state.list, item]
         })
+
     }
 
     changeItem = (value,id) => {
-
         const {list = []} = this.state
 
         const new_list = list.map((item) => {
@@ -38,6 +35,7 @@ class App extends React.Component {
         })
 
         this.setState({list:new_list})
+
     }
 
     checkList = (id) => {
@@ -56,14 +54,40 @@ class App extends React.Component {
         this.setState({list:new_list})
     }
 
+    deleteItem = (id) => {
+        const {list = []} = this.state
+
+        const new_list = list.filter((item) => item.id != id)
+
+        this.setState({list:new_list})
+    }
+
+    componentWillMount() {
+        if (localStorage.getItem("list")){
+
+            let listStorage = JSON.parse(localStorage.getItem("list"))
+
+            this.setState({list:listStorage})
+        }
+    }
+
     render() {
         const { list = [] } = this.state
+
+        if (list.length != 0){
+            localStorage.setItem("list",JSON.stringify(this.state.list))
+        }
 
         return (
             <div>
                 Введите данные нажмите Enter
                 <InputData listAdd={this.listAdd}/>
-                <ListTodo list={list} checkList={this.checkList} changeItem={this.changeItem}/>
+                <ListTodo
+                    list={list}
+                    checkList={this.checkList}
+                    changeItem={this.changeItem}
+                    deleteItem={this.deleteItem}
+                />
             </div>
         );
     }

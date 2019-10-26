@@ -27,6 +27,10 @@ class ListTodo extends React.PureComponent {
         this.props.changeItem(value,id)
     }
 
+    deleteItem = (id) => {
+        this.props.deleteItem(id)
+    }
+
     render() {
         const { list = []} = this.props
         let listFilter = this.props.list
@@ -53,6 +57,7 @@ class ListTodo extends React.PureComponent {
                             value={item.value}
                             id={item.id}
                             changeItem={this.changeItem}
+                            deleteItem={this.deleteItem}
                         />
                     ))}
                 </ul>
