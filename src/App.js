@@ -111,15 +111,14 @@ class App extends React.Component {
     }
 
     allActive = () => {
-        const {list = []} = this.state
+        const { list = [] } = this.state
 
         const new_list = list.map((item) => {
 
-            const objAdd = {...item}
-
-            objAdd.active = true
-
-            return objAdd
+            return {
+                ...item,
+                active: true
+            }
         })
 
         this.setState({list:new_list})

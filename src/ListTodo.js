@@ -51,10 +51,8 @@ class ListTodo extends React.PureComponent {
                         map( item => (
                             <Item
                                 key={item.id}
-                                defaultChecked={item.active}
+                                { ...item }
                                 toggleCheck={this.toggleCheck}
-                                value={item.value}
-                                id={item.id}
                                 changeItem={this.changeItem}
                                 deleteItem={this.deleteItem}
                             />

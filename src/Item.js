@@ -1,22 +1,47 @@
 import React from 'react';
 
 class Item extends React.PureComponent{
-    state = {
-        value: this.props.value,
-        inputView: false,
+    constructor(props) {
+        super(props);
+
+        let value = props.value
+
+        this.state = {
+            value,
+            inputView: false,
+        }
     }
 
+    itemRef = null
+
+    componentDidUpdate(prevProps, prevState) {
+        if( prevState.inputView != this.state.inputView )
+        {
+            if(this.state.inputView)
+            {
+                document.addEventListener("click", this.handleClick )
+            }
+            else if(!this.state.inputView)
+            {
+                document.removeEventListener("click", this.handleClick)
+            }
+        }
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener("click", this.handleClick)
+    }
 
     handleChange = (event) => {
         const value = event.target.value
+
         this.setState({value})
     }
 
-    onKey = (event, clickOut) => {
-        if (event.keyCode == 13 || clickOut == true) {
+    onKey = (event) => {
+        if (event.keyCode == 13 ) {
             this.props.changeItem(this.state.value,this.props.id)
-            document.removeEventListener("click", this.handleClick)
-            clickOut = false
+
             this.setState({inputView: false})
         }
 
@@ -38,28 +63,33 @@ class Item extends React.PureComponent{
         this.props.deleteItem(this.props.id)
     }
 
-    clickOutInput = () => {
-        document.addEventListener("click", this.handleClick)
+    handleClick = (e) => {
+        if (e.target.closest("item") != this.itemRef) {
+            this.setState({
+                inputView: false
+            });
+        }
     }
 
-    handleClick = (e) => {
-        console.log(e.target)
-        if (e.target.id != this.props.id) {
-            this.onKey(event, true)
-        }
+    initRef = (node) => {
+        this.itemRef = node
     }
 
     render() {
         const { value, inputView } = this.state
 
+        const {
+            active = false,
+        } = this.props
+
         return (
             <li
+                ref={this.initRef}
                 className="item"
-                key={this.props.key}
             >
                 <input
                     type="checkbox"
-                    defaultChecked={this.props.defaultChecked}
+                    checked={ active }
                     onChange={this.toggleCheck}
                 />
 
@@ -68,12 +98,9 @@ class Item extends React.PureComponent{
                 </span> }
 
                 { inputView && <input
-                   // autoFocus={true}
-                    id={this.props.id}
                     value={value}
                     onChange={this.handleChange}
                     onKeyDown={this.onKey}
-                    onClick={this.clickOutInput}
                 /> }
 
                 <button
