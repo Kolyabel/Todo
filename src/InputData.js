@@ -20,7 +20,7 @@ class InputData extends React.PureComponent {
         }
     }
 
-    allActive = () =>{
+    allActive = () => {
         this.props.allActive()
     }
 
