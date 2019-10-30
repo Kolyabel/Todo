@@ -19,6 +19,9 @@ class Item extends React.PureComponent{
         {
             if(this.state.inputView)
             {
+                if(this.itemRef){
+                    this.itemRef.focus()
+                }
                 document.addEventListener("click", this.handleClick )
             }
             else if(!this.state.inputView)
@@ -64,7 +67,7 @@ class Item extends React.PureComponent{
     }
 
     handleClick = (e) => {
-        if (e.target.closest("item") != this.itemRef) {
+        if (e.target != this.itemRef) {
             this.setState({
                 inputView: false
             });
@@ -83,10 +86,7 @@ class Item extends React.PureComponent{
         } = this.props
 
         return (
-            <li
-                ref={this.initRef}
-                className="item"
-            >
+            <li>
                 <input
                     type="checkbox"
                     checked={ active }
@@ -98,6 +98,8 @@ class Item extends React.PureComponent{
                 </span> }
 
                 { inputView && <input
+                    className="todo-value"
+                    ref={this.initRef}
                     value={value}
                     onChange={this.handleChange}
                     onKeyDown={this.onKey}
