@@ -114,7 +114,6 @@ class App extends React.Component {
         const { list = [] } = this.state
 
         const new_list = list.map((item) => {
-
             return {
                 ...item,
                 active: true
