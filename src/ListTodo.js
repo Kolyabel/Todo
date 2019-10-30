@@ -3,24 +3,12 @@ import Item from "./Item";
 
 class ListTodo extends React.PureComponent {
 
-    state = {
-        sortList: "all",
-    }
-
     toggleCheck = (id) => {
         this.props.checkList(id)
     }
 
-    buttonActive = () =>{
-        this.setState({sortList: "active"})
-    }
-
-    buttonCompleted = () => {
-        this.setState({sortList: "completed"})
-    }
-
-    buttonAll = () =>{
-        this.setState({sortList: "all"})
+    handleChangeFilter = ( type = "") => {
+        this.props.onChangeFilter(type)
     }
 
     changeItem = (value,id) => {
@@ -31,43 +19,105 @@ class ListTodo extends React.PureComponent {
         this.props.deleteItem(id)
     }
 
-    render() {
-        const { list = []} = this.props
-        let listFilter = this.props.list
+    filterList = ( item ) => {
+        const { type = "" } = this.props
 
-        if (this.state.sortList == "active"){
-
-            listFilter = list.filter((item) => item.active == true)
-        } else if (this.state.sortList == "completed"){
-
-            listFilter = list.filter((item) => item.active == false)
-        } else if (this.state.sortList == "all"){
-
-            listFilter = this.props.list
+        if (type == "active")
+        {
+            return item.active == true
         }
+        else if (type == "completed")
+        {
+            return  item.active == false
+        }
+        else
+        {
+            return true
+        }
+    }
+
+    deleteActive = () => {
+        this.props.deleteActive()
+    }
+
+    render() {
+        const { list = [] } = this.props
 
         return(
             <div>
                 <ul>
-                    { listFilter.map( (item,index) => (
-                        <Item
-                            key={item.id}
-                            defaultChecked={item.active}
-                            toggleCheck={this.toggleCheck}
-                            value={item.value}
-                            id={item.id}
-                            changeItem={this.changeItem}
-                            deleteItem={this.deleteItem}
-                        />
-                    ))}
+                    { list.
+                        filter( item => this.filterList(item) ).
+                        map( item => (
+                            <Item
+                                key={item.id}
+                                defaultChecked={item.active}
+                                toggleCheck={this.toggleCheck}
+                                value={item.value}
+                                id={item.id}
+                                changeItem={this.changeItem}
+                                deleteItem={this.deleteItem}
+                            />
+                        )
+                    )}
                 </ul>
 
-                <button onClick={this.buttonActive}> Отмеченные </button>
-                <button onClick={this.buttonCompleted}> Пустые </button>
-                <button onClick={this.buttonAll}> Все </button>
-
+                <Button
+                    onClick={this.handleChangeFilter}
+                    type="active"
+                >
+                    Отмеченные
+                </Button>
+                <button
+                    onClick={this.handleChangeFilter}
+                    type="completed"
+                >
+                    Пустые
+                </button>
+                <button
+                    onClick={this.handleChangeFilter}
+                    type="all"
+                >
+                    Все
+                </button>
+                <button
+                    onClick={this.deleteActive}
+                >
+                    Удалить отмеченные
+                </button>
             </div>
         )
+    }
+}
+
+class Button extends React.PureComponent{
+    handleClick = () => {
+        const { onClick, type = "" } = this.props
+
+        if(
+            onClick !== undefined &&
+            typeof onClick === "function"
+        ){
+            onClick( type )
+        }
+    }
+
+    render() {
+        const { children = null } = this.props
+
+       /* let tmp = ""
+
+        if( this.props.type !== undefined ) {
+            tmp = this.props.type
+        }
+
+        const type = tmp*/
+
+        return (
+            <button onClick={this.handleClick}>
+                { children }
+            </button>
+        );
     }
 }
 

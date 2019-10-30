@@ -20,11 +20,18 @@ class InputData extends React.PureComponent {
         }
     }
 
+    allActive = () =>{
+        this.props.allActive()
+    }
+
     render() {
         const { value } = this.state
 
         return (
-            <div>        
+            <div>
+                 <button onClick={this.allActive}>
+                     ALL
+                 </button>
                  <input 
                     value={value}
                     onChange={this.handleChange}
