@@ -41,7 +41,10 @@ class ListTodo extends React.PureComponent {
     }
 
     render() {
-        const { list = [] } = this.props
+        const {
+            list = [],
+            counterCheck = 0
+        } = this.props
 
         return(
             <div>
@@ -60,24 +63,29 @@ class ListTodo extends React.PureComponent {
                     )}
                 </ul>
 
+                <span>
+                    {counterCheck}
+                    : no active
+                </span>
+
                 <Button
                     onClick={this.handleChangeFilter}
                     type="active"
                 >
                     Отмеченные
                 </Button>
-                <button
+                <Button
                     onClick={this.handleChangeFilter}
                     type="completed"
                 >
                     Пустые
-                </button>
-                <button
+                </Button>
+                <Button
                     onClick={this.handleChangeFilter}
                     type="all"
                 >
                     Все
-                </button>
+                </Button>
                 <button
                     onClick={this.deleteActive}
                 >

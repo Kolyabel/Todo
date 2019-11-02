@@ -7,6 +7,8 @@ class App extends React.Component {
     state = {
         list: [],
         typeFilter: "",
+        activeCheck: false,
+        counterCheck: 0,
     }
 
     componentDidMount() {
@@ -26,7 +28,28 @@ class App extends React.Component {
     componentDidUpdate(prevProps, prevState) {
         if (this.state.list !== prevState.list) {
             localStorage.setItem("list",JSON.stringify(this.state.list))
+
+            const { list = [] } = this.state
+
+            let activeCheck = false
+
+            let counterCheck = 0
+
+            list.forEach(item => {
+                if(item.active) {
+                    counterCheck ++
+                }
+            })
+
+            if (counterCheck == list.length) {
+                activeCheck = true
+            } else {
+                activeCheck = false
+            }
+
+            this.setState({activeCheck: activeCheck, counterCheck: list.length - counterCheck})
         }
+
         if (this.state.typeFilter !== prevState.typeFilter) {
             localStorage.setItem("typeFilter", (this.state.typeFilter))
         }
@@ -126,7 +149,9 @@ class App extends React.Component {
     render() {
         const {
             list = [],
-            typeFilter = ""
+            typeFilter = "",
+            activeCheck = false,
+            counterCheck = 0
         } = this.state
 
         return (
@@ -135,6 +160,7 @@ class App extends React.Component {
                 <InputData
                     listAdd={this.listAdd}
                     allActive={this.allActive}
+                    activeCheck={activeCheck}
                 />
                 <ListTodo
                     list={list}
@@ -144,6 +170,7 @@ class App extends React.Component {
                     type={typeFilter}
                     onChangeFilter={this.onChangeFilter}
                     deleteActive={this.deleteActive}
+                    counterCheck={counterCheck}
                 />
             </div>
         );

@@ -27,11 +27,15 @@ class InputData extends React.PureComponent {
     render() {
         const { value } = this.state
 
+        const { activeCheck = false } = this.props
+
         return (
             <div>
-                 <button onClick={this.allActive}>
-                     ALL
-                 </button>
+                 <input
+                     type="checkbox"
+                     checked={ activeCheck }
+                     onChange={this.allActive}
+                 />
                  <input 
                     value={value}
                     onChange={this.handleChange}

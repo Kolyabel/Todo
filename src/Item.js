@@ -68,6 +68,7 @@ class Item extends React.PureComponent{
 
     handleClick = (e) => {
         if (e.target != this.itemRef) {
+            this.props.changeItem(this.state.value,this.props.id)
             this.setState({
                 inputView: false
             });
